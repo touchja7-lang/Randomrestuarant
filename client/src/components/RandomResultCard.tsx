@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Restaurant } from '../types';
+import { getLineManUrl, getGrabUrl } from '../utils/delivery';
 
 const PRICE_BADGE_STYLE: Record<string, { label: string; textClass: string; bgClass: string }> = {
   cheap: { label: '฿ ประหยัด (ต่ำกว่า 100.-)', textClass: 'text-emerald-700', bgClass: 'bg-emerald-50 border-emerald-200' },
@@ -237,43 +238,79 @@ export const RandomResultCard = ({ restaurant, onSpinAgain }: RandomResultCardPr
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-          {restaurant.googleMapsUrl ? (
+        {/* Delivery Order & Navigation */}
+        <div className="space-y-3 pt-2">
+          <div className="flex items-center justify-between text-xs font-bold text-zinc-500">
+            <span className="flex items-center gap-1.5 uppercase tracking-wider">
+              <span>🛵</span> สั่งเดลิเวอรี (Food Delivery)
+            </span>
+            <span className="text-[11px] font-normal text-zinc-400">สั่งออนไลน์ส่งถึงที่</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {/* LINE MAN Button */}
             <a
-              href={restaurant.googleMapsUrl}
+              href={getLineManUrl(restaurant)}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary sm:col-span-2 py-3 text-sm font-bold shadow-md"
+              className="inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm bg-[#06C755] hover:bg-[#05b34c] active:bg-[#049a41] text-white shadow-sm hover:shadow active:scale-[0.98] transition-all"
             >
-              <span>📍</span> เปิดเส้นทางใน Google Maps
+              <span className="text-base">🛵</span>
+              <span>สั่งผ่าน LINE MAN</span>
+              <span className="text-xs opacity-75">↗</span>
             </a>
-          ) : (
-            <Link
-              to={`/restaurants/${restaurant._id}`}
-              className="btn-primary sm:col-span-2 py-3 text-sm font-bold"
-            >
-              ดูข้อมูลร้าน
-            </Link>
-          )}
 
-          <button
-            onClick={onSpinAgain}
-            className="btn-secondary py-3 text-sm font-semibold"
-          >
-            <span>🔄</span> สุ่มร้านใหม่
-          </button>
-
-          {restaurant.sourceUrl && (
+            {/* GrabFood Button */}
             <a
-              href={restaurant.sourceUrl}
+              href={getGrabUrl(restaurant)}
               target="_blank"
               rel="noopener noreferrer"
-              className="sm:col-span-3 text-center text-xs font-semibold py-2 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 transition-colors"
+              className="inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm bg-[#00B14F] hover:bg-[#009e46] active:bg-[#00893d] text-white shadow-sm hover:shadow active:scale-[0.98] transition-all"
             >
-              🍽️ ดูรีวิวและภาพเมนูเพิ่มเติมบน Wongnai ↗
+              <span className="text-base">🟢</span>
+              <span>สั่งผ่าน GrabFood</span>
+              <span className="text-xs opacity-75">↗</span>
             </a>
-          )}
+          </div>
+
+          {/* Action Buttons: Google Maps, Spin Again, Wongnai */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 border-t border-zinc-100">
+            {restaurant.googleMapsUrl ? (
+              <a
+                href={restaurant.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary sm:col-span-2 py-3 text-sm font-bold shadow-md"
+              >
+                <span>📍</span> เปิดเส้นทางใน Google Maps
+              </a>
+            ) : (
+              <Link
+                to={`/restaurants/${restaurant._id}`}
+                className="btn-primary sm:col-span-2 py-3 text-sm font-bold"
+              >
+                ดูข้อมูลร้าน
+              </Link>
+            )}
+
+            <button
+              onClick={onSpinAgain}
+              className="btn-secondary py-3 text-sm font-semibold cursor-pointer"
+            >
+              <span>🔄</span> สุ่มร้านใหม่
+            </button>
+
+            {restaurant.sourceUrl && (
+              <a
+                href={restaurant.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sm:col-span-3 text-center text-xs font-semibold py-2 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 transition-colors"
+              >
+                🍽️ ดูรีวิวและภาพเมนูเพิ่มเติมบน Wongnai ↗
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </div>

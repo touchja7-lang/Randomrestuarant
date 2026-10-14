@@ -13,6 +13,8 @@ export interface IRestaurant extends Document {
   imageUrl?: string;
   googleMapsUrl?: string;
   sourceUrl?: string;
+  lineManUrl?: string;
+  grabUrl?: string;
   isOpen: boolean;
   rating: number;
   createdAt: Date;
@@ -36,6 +38,8 @@ const RestaurantSchema = new Schema<IRestaurant>(
     imageUrl: { type: String, default: '' },
     googleMapsUrl: { type: String, default: '' },
     sourceUrl: { type: String, default: '' },
+    lineManUrl: { type: String, default: '' },
+    grabUrl: { type: String, default: '' },
     isOpen: { type: Boolean, default: true },
     rating: { type: Number, min: 0, max: 5, default: 0 },
   },

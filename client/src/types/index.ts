@@ -19,6 +19,8 @@ export interface Restaurant {
   imageUrl: string;
   googleMapsUrl: string;
   sourceUrl?: string;
+  lineManUrl?: string;
+  grabUrl?: string;
   isOpen: boolean;
   rating: number;
   createdAt: string;

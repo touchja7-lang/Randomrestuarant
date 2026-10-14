@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useRestaurant, useDeleteRestaurant } from '../hooks/useRestaurants';
+import { getLineManUrl, getGrabUrl } from '../utils/delivery';
 
 const PRICE_BADGE_MAP: Record<string, { label: string; textClass: string; bgClass: string }> = {
   cheap: { label: '฿ ประหยัด (ต่ำกว่า 100.-)', textClass: 'text-emerald-700', bgClass: 'bg-emerald-50 border-emerald-200' },
@@ -255,14 +256,50 @@ export const RestaurantDetailPage = () => {
             </div>
           )}
 
+          {/* Delivery Ordering Apps (LINE MAN & Grab) */}
+          <div className="bg-gradient-to-br from-emerald-50/60 to-zinc-50 rounded-2xl p-4 border border-emerald-200/80 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+                <span>🛵</span> สั่งอาหารเดลิเวอรี (Food Delivery)
+              </span>
+              <span className="text-[11px] font-medium text-emerald-600">ส่งถึงที่ทันที</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {/* LINE MAN Button */}
+              <a
+                href={getLineManUrl(restaurant)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm bg-[#06C755] hover:bg-[#05b34c] active:bg-[#049a41] text-white shadow-sm hover:shadow active:scale-[0.98] transition-all"
+              >
+                <span className="text-base">🛵</span>
+                <span>สั่งผ่าน LINE MAN</span>
+                <span className="text-xs opacity-75">↗</span>
+              </a>
+
+              {/* GrabFood Button */}
+              <a
+                href={getGrabUrl(restaurant)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm bg-[#00B14F] hover:bg-[#009e46] active:bg-[#00893d] text-white shadow-sm hover:shadow active:scale-[0.98] transition-all"
+              >
+                <span className="text-base">🟢</span>
+                <span>สั่งผ่าน GrabFood</span>
+                <span className="text-xs opacity-75">↗</span>
+              </a>
+            </div>
+          </div>
+
           {/* Action Navigation Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 pt-2">
             {restaurant.googleMapsUrl && (
               <a
                 href={restaurant.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary flex-1 py-3 text-sm font-bold shadow-md"
+                className="btn-primary flex-1 py-3 text-sm font-bold shadow-md text-center"
               >
                 <span>📍</span> เปิดเส้นทางใน Google Maps
               </a>
@@ -286,19 +323,19 @@ export const RestaurantDetailPage = () => {
           </div>
 
           {/* Management Controls */}
-          <div className="pt-6 border-t border-zinc-100 flex items-center justify-between">
+          <div className="pt-6 border-t border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <span className="text-xs text-zinc-400">การจัดการข้อมูลร้านนี้</span>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <Link
                 to={`/restaurants/${restaurant._id}/edit`}
-                className="btn-secondary text-xs py-1.5 px-3"
+                className="btn-secondary flex-1 sm:flex-initial text-xs py-2 px-3 text-center"
               >
                 ✏️ แก้ไขข้อมูล
               </Link>
               <button
                 onClick={handleDelete}
                 disabled={deleteMutation.isPending}
-                className="text-xs py-1.5 px-3 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 font-medium transition-colors"
+                className="flex-1 sm:flex-initial text-xs py-2 px-3 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 active:bg-red-100 font-medium transition-colors cursor-pointer text-center"
               >
                 🗑️ ลบร้านนี้
               </button>

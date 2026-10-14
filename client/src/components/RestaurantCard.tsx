@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Restaurant } from '../types';
+import { getLineManUrl, getGrabUrl } from '../utils/delivery';
 
 interface RestaurantCardProps {
   restaurant: Restaurant;
@@ -119,6 +120,28 @@ export const RestaurantCard = ({ restaurant, onDelete }: RestaurantCardProps) =>
 
           {/* Quick Actions (Always available for personal use) */}
           <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
+            <a
+              href={getLineManUrl(restaurant)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="min-w-[32px] min-h-[32px] flex items-center justify-center p-1 rounded-lg hover:bg-emerald-50 active:bg-emerald-100 transition-colors text-xs"
+              title="สั่งเดลิเวอรีผ่าน LINE MAN"
+            >
+              <span className="w-5 h-5 rounded-md bg-[#06C755] text-white flex items-center justify-center text-[11px] font-black shadow-2xs">
+                LM
+              </span>
+            </a>
+            <a
+              href={getGrabUrl(restaurant)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="min-w-[32px] min-h-[32px] flex items-center justify-center p-1 rounded-lg hover:bg-emerald-50 active:bg-emerald-100 transition-colors text-xs"
+              title="สั่งเดลิเวอรีผ่าน GrabFood"
+            >
+              <span className="w-5 h-5 rounded-md bg-[#00B14F] text-white flex items-center justify-center text-[10px] font-black shadow-2xs">
+                GB
+              </span>
+            </a>
             {restaurant.googleMapsUrl && (
               <a
                 href={restaurant.googleMapsUrl}

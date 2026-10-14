@@ -40,6 +40,8 @@ export const RestaurantForm = ({ defaultValues, onSubmit, isLoading }: Restauran
       imageUrl: defaultValues?.imageUrl || '',
       googleMapsUrl: defaultValues?.googleMapsUrl || '',
       sourceUrl: defaultValues?.sourceUrl || '',
+      lineManUrl: defaultValues?.lineManUrl || '',
+      grabUrl: defaultValues?.grabUrl || '',
       isOpen: defaultValues?.isOpen ?? true,
       rating: defaultValues?.rating ?? 4.0,
       menus: defaultValues?.menus || [],
@@ -342,6 +344,41 @@ export const RestaurantForm = ({ defaultValues, onSubmit, isLoading }: Restauran
               className="input-base"
               placeholder="https://www.wongnai.com/r/..."
             />
+          </div>
+
+          {/* Delivery App Links */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 p-3.5 rounded-xl bg-zinc-50 border border-zinc-200/80">
+            <div>
+              <label className="label-base flex items-center gap-1.5 text-emerald-800">
+                <span>🛵 ลิงก์ร้านบน LINE MAN (ไม่บังคับ)</span>
+              </label>
+              <input
+                {...register('lineManUrl')}
+                className="input-base text-xs"
+                placeholder="https://lineman.line.me/... (เว้นว่างเพื่อค้นหาอัตโนมัติ)"
+              />
+              {errors.lineManUrl && (
+                <p className="text-xs font-medium text-brand-600 mt-1">
+                  {errors.lineManUrl.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="label-base flex items-center gap-1.5 text-[#00B14F]">
+                <span>🟢 ลิงก์ร้านบน GrabFood (ไม่บังคับ)</span>
+              </label>
+              <input
+                {...register('grabUrl')}
+                className="input-base text-xs"
+                placeholder="https://food.grab.com/... (เว้นว่างเพื่อค้นหาอัตโนมัติ)"
+              />
+              {errors.grabUrl && (
+                <p className="text-xs font-medium text-brand-600 mt-1">
+                  {errors.grabUrl.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <div>

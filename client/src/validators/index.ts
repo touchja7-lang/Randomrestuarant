@@ -25,6 +25,8 @@ export const restaurantSchema = z.object({
   imageUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')).default(''),
   googleMapsUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')).default(''),
   sourceUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')).default(''),
+  lineManUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')).default(''),
+  grabUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')).default(''),
   isOpen: z.boolean().optional().default(true),
   rating: z.number().min(0).max(5).optional().default(0),
 });
