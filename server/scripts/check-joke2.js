@@ -1,0 +1,19 @@
+const https = require('https');
+
+https.get('https://www.wongnai.com/restaurants/jokesamyaan', {
+  headers: {
+    'User-Agent':
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  },
+}, (res) => {
+  let data = '';
+  res.on('data', chunk => data += chunk);
+  res.on('end', () => {
+    const ogTitle = data.match(/property="og:title"\s+content="([^"]+)"/i) || data.match(/content="([^"]+)"\s+property="og:title"/i);
+    const ogImage = data.match(/property="og:image"\s+content="([^"]+)"/i) || data.match(/content="([^"]+)"\s+property="og:image"/i);
+    const address = data.match(/"address":"([^"]+)"/i) || data.match(/"streetAddress":"([^"]+)"/i);
+    console.log('Title:', ogTitle ? ogTitle[1] : null);
+    console.log('Image:', ogImage ? ogImage[1] : null);
+    console.log('Address:', address ? address[1] : null);
+  });
+});
